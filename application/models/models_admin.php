@@ -301,7 +301,7 @@ class models_admin extends CI_model {
             return $value;
         }
         elseif($data=='catproducts'){
-            $where['tb_location_categories'] = "products";
+             $where['tb_location_categories'] = "products";
              $que = $this->db->get_where("wq_categories",$where);
                 foreach($que->result_array() as $a){
                 if($a['tb_status_categories'] === 1){$status="Publish";}elseif ($a['tb_status_categories'] === 2){$status = "Moderation";}else{$status = "Not Publish";}
@@ -313,6 +313,25 @@ class models_admin extends CI_model {
                                         <ul class="navbar-icons">
                                             <li><a href="'.base_url().$this->perm_user.'/cat_products/update/'.$a['tb_id_categories'].'/'.url_title($a['tb_name_categories']).'.aspx" class="tip" title="Edit Content"><i class="fam-pencil"></i></a> </li>
                                             <li><a href="'.base_url().$this->perm_user.'/cat_products/delete/'.$a['tb_id_categories'].'/'.url_title($a['tb_name_categories']).'.aspx" class="tip" title="Remove Content"><i class="fam-cross"></i></a> </li>
+                                        </ul>
+                                    </td>
+                                </tr>';  
+                 }
+              return $value;
+        }
+        elseif($data=='catblog'){
+             $where['tb_location_categories'] = "blog";
+             $que = $this->db->get_where("wq_categories",$where);
+                foreach($que->result_array() as $a){
+                if($a['tb_status_categories'] === 1){$status="Publish";}elseif ($a['tb_status_categories'] === 2){$status = "Moderation";}else{$status = "Not Publish";}
+                $value .= '<tr><td>'.$a['tb_id_categories'].'</td>
+                                    <td>'.$a['tb_name_categories'].'</td>
+                                    <td>'.$a['tb_sub_categories'].'</td>
+                                    <td>'.$status.'</td>
+                                    <td>
+                                        <ul class="navbar-icons">
+                                            <li><a href="'.base_url().$this->perm_user.'/cat_blog/update/'.$a['tb_id_categories'].'/'.url_title($a['tb_name_categories']).'.aspx" class="tip" title="Edit Content"><i class="fam-pencil"></i></a> </li>
+                                            <li><a href="'.base_url().$this->perm_user.'/cat_blog/delete/'.$a['tb_id_categories'].'/'.url_title($a['tb_name_categories']).'.aspx" class="tip" title="Remove Content"><i class="fam-cross"></i></a> </li>
                                         </ul>
                                     </td>
                                 </tr>';  

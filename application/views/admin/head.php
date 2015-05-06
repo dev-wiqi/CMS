@@ -12,8 +12,6 @@
 
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assetsCI/js/plugins/charts/excanvas.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assetsCI/js/plugins/charts/jquery.flot.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assetsCI/js/plugins/charts/jquery.flot.resize.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assetsCI/js/plugins/charts/jquery.sparkline.min.js"></script>
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assetsCI/js/plugins/ui/jquery.easytabs.min.js"></script>
@@ -51,7 +49,6 @@
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assetsCI/js/files/functions.js"></script>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>assetsCI/js/charts/graph.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assetsCI/js/charts/chart1.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assetsCI/js/charts/chart2.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assetsCI/js/charts/chart3.js"></script>
