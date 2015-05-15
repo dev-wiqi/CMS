@@ -1,3 +1,16 @@
+/* ========================================================
+*
+* Pannonia - responsive admin template
+*
+* ========================================================
+*
+* File: plugins.css;
+* Description: Contains styles for plugins, if you don't use any of plugins, you can remove its styling
+* Version: 1.0
+*
+* ======================================================== */
+
+
 
 /* # Uniform plugin (form elements styling)
 ================================================== */
@@ -8,7 +21,6 @@
 .selector, .checker, .button, .choice, .uploader { display: -moz-inline-box; display: inline-block; *display: inline; zoom: 1; vertical-align: middle; }
 .selector select:focus, .choice input:focus, .checker input:focus, .uploader input:focus { outline: 0; }
 .selector, .choice, .checker, .uploader, .selector *, .choice *, .checker *, .uploader * { margin: 0; padding: 0; }
-.checker input { -moz-appearance: none; -webkit-appearance: none; }
 
 
 

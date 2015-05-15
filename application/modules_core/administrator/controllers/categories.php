@@ -26,7 +26,6 @@ class categories extends MX_Controller {
         $a['mweb'] = $this->models_admin->menu("web",$this->perm_user);
         $a['mblog'] = $this->models_admin->menu("blog",  $this->perm_user);
         $a['madmin'] = $this->models_admin->menu("admin",  $this->perm_user);
-        $a['mproducts'] = $this->models_admin->menu("products",$this->perm_user);
         $a['link'] = $this->perm_user."/categories/add";
         $a['profile'] = $this->models_admin->profile_top($this->session->userdata("id_user"));
         $a['content'] = $this->models_admin->content('categories');
@@ -50,10 +49,9 @@ class categories extends MX_Controller {
         $a['mweb'] = $this->models_admin->menu("web",$this->perm_user);
         $a['mblog'] = $this->models_admin->menu("blog",  $this->perm_user);
         $a['madmin'] = $this->models_admin->menu("admin",  $this->perm_user);
-        $a['mproducts'] = $this->models_admin->menu("products",$this->perm_user);
         $a['profile'] = $this->models_admin->profile_top($this->session->userdata("id_user"));
         $a['action'] = $this->perm_user."/categories/save";
-        $a['categories'] = $this->models_admin->categories("web",null);
+        $a['categories'] = $this->models_admin->categories(null,null);
         
         $this->load->view("admin/head",$a);
         $this->load->view("admin/menu");
@@ -80,10 +78,9 @@ class categories extends MX_Controller {
         $a['mweb'] = $this->models_admin->menu("web",$this->perm_user);
         $a['mblog'] = $this->models_admin->menu("blog",  $this->perm_user);
         $a['madmin'] = $this->models_admin->menu("admin",  $this->perm_user);
-        $a['mproducts'] = $this->models_admin->menu("products",$this->perm_user);
         $a['profile'] = $this->models_admin->profile_top($this->session->userdata("id_user"));
         $a['action'] = $this->perm_user."/categories/saveupdate";
-        $a['categories'] = $this->models_admin->categories("web",null);
+        $a['categories'] = $this->models_admin->categories(null,null);
         $whre['tb_id_categories'] = $uri;
         $content = $this->db->get_where("wq_categories",$whre);
         foreach($content->result() as $b){
@@ -106,7 +103,6 @@ class categories extends MX_Controller {
            }
            $insert['tb_name_categories'] = $this->input->post("title");
            $insert['tb_sub_categories'] = $this->input->post("kategori");
-           $insert['tb_location_categories'] = "web";
            $insert['tb_status_categories'] = 1;
            
            $this->db->insert("wq_categories",$insert);

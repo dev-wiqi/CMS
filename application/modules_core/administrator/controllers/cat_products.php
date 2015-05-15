@@ -29,7 +29,7 @@ class cat_products extends MX_Controller {
         $a['mproducts'] = $this->models_admin->menu("products",$this->perm_user);
         $a['link'] = $this->perm_user."/cat_products/add";
         $a['profile'] = $this->models_admin->profile_top($this->session->userdata("id_user"));
-        $a['content'] = $this->models_admin->content('catproducts');
+        $a['content'] = $this->models_admin->content('catprodcuts');
         
        
         $this->load->view("admin/head",$a);
@@ -49,11 +49,10 @@ class cat_products extends MX_Controller {
         $a['permission'] = $this->perm_user;
         $a['mweb'] = $this->models_admin->menu("web",$this->perm_user);
         $a['mblog'] = $this->models_admin->menu("blog",  $this->perm_user);
-        $a['mproducts'] = $this->models_admin->menu("products",$this->perm_user);
         $a['madmin'] = $this->models_admin->menu("admin",  $this->perm_user);
         $a['profile'] = $this->models_admin->profile_top($this->session->userdata("id_user"));
         $a['action'] = $this->perm_user."/cat_products/save";
-        $a['categories'] = $this->models_admin->categories("products",null);
+        $a['categories'] = $this->models_admin->categories(null,null);
         
         $this->load->view("admin/head",$a);
         $this->load->view("admin/menu");
@@ -80,7 +79,6 @@ class cat_products extends MX_Controller {
         $a['mweb'] = $this->models_admin->menu("web",$this->perm_user);
         $a['mblog'] = $this->models_admin->menu("blog",  $this->perm_user);
         $a['madmin'] = $this->models_admin->menu("admin",  $this->perm_user);
-        $a['mproducts'] = $this->models_admin->menu("products",$this->perm_user);
         $a['profile'] = $this->models_admin->profile_top($this->session->userdata("id_user"));
         $a['action'] = $this->perm_user."/cat_products/saveupdate";
         $a['categories'] = $this->models_admin->categories(null,null);
@@ -109,7 +107,7 @@ class cat_products extends MX_Controller {
            $insert['tb_status_categories'] = 1;
            
            $this->db->insert("wq_categories",$insert);
-           redirect($this->perm_user."/cat_products");
+           redirect($this->perm_user."/categories");
        }
        else{
            redirect("auth/auth");

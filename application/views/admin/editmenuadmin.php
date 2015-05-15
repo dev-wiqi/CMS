@@ -58,7 +58,6 @@
                                                 <option value="0">--Select Parent--</option>
                                                 <option value="web">Web</option>
                                                 <option value="blog">Blog</option>
-                                                <option value="products">Products</option>
                                                 <option value="admin">Administrator</option>
 	                                    </select>
 	                                </div>
@@ -73,16 +72,6 @@
                                                 <option value="editor">Editor</option>
                                                 <option value="writer">Writer</option>
 	                                    </select>
-	                                </div>
-	                            </div>
-                                    
-                                    <div class="control-group">
-	                                <label class="control-label">Status: <span class="text-error">*</span></label>
-	                                <div class="controls">
-	                                    <select name="status" class="validate[required] styled" data-prompt-position="topLeft:-1,-5">
-                                                <option value="1">Active</option>
-                                                <option value="2">Deactive</option>
-                                            </select>
 	                                </div>
 	                            </div>
                                     

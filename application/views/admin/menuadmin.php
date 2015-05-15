@@ -43,6 +43,9 @@
                                     <th>#</th>
                                     <th>Title</th>
                                     <th>Link Menu</th>
+                                    <th>Parent Menu</th>
+                                    <th>Position Menu</th>
+                                    <th>Icon Menu</th>
                                     <th>Location Menu</th>
                                     <th>Permission</th>
                                     <th>Status</th>

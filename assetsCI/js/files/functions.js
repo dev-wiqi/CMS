@@ -795,6 +795,8 @@ $(function() {
 	});
 
 
+
+	
 	//===== Collapsible plugin for main nav =====//
 	
 	$('.expand').collapsible({

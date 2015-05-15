@@ -129,14 +129,11 @@ class menu_admin extends MX_Controller {
            $this->form_validation->set_rules('title','Title','trim|required');
            
            if ($this->form_validation->run()==FALSE){
-               show_error("Validation Error Bro",500); 
+               $error = "";
            }
            $insert['tb_name_menu'] = $this->input->post("title");
            $insert['tb_parent_menu'] = $this->input->post("kategori");
-           $insert['tb_link_menu'] = $this->input->post("module");
-           $insert['tb_location_menu'] = $this->input->post("location");
-           $insert['tb_permission_menu'] = $this->input->post("permission");
-           $insert['tb_status_menu'] = $this->input->post("status");
+           $insert['tb_status_menu'] = 1;
            $where = $this->input->post("id");
            
            $this->db_admin->where("tb_id_menu",$where);
