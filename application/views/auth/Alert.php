@@ -1,0 +1,1 @@
+<p><?php echo $this->session->flashdata("result_login"); ?></p>
