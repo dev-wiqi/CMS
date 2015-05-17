@@ -32,7 +32,7 @@
 	                            <div class="control-group">
 	                                <label class="control-label">Name: <span class="text-error">*</span></label>
 	                                <div class="controls">
-	                                    <input type="text" class="validate[required] span3" name="title" id="req"/>
+                                            <input type="text" class="validate[required] span3" name="title" value="<?php echo $name; ?>" id="req"/>
                                             <input type="hidden" name="id" value="<?php echo $id; ?>"/>
 	                                </div>
 	                            </div>

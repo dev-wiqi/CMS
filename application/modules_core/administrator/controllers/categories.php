@@ -26,6 +26,7 @@ class categories extends MX_Controller {
         $a['mweb'] = $this->models_admin->menu("web",$this->perm_user);
         $a['mblog'] = $this->models_admin->menu("blog",  $this->perm_user);
         $a['madmin'] = $this->models_admin->menu("admin",  $this->perm_user);
+        $a['mproducts'] = $this->models_admin->menu("products",$this->perm_user);
         $a['link'] = $this->perm_user."/categories/add";
         $a['profile'] = $this->models_admin->profile_top($this->session->userdata("id_user"));
         $a['content'] = $this->models_admin->content('categories');
@@ -49,9 +50,10 @@ class categories extends MX_Controller {
         $a['mweb'] = $this->models_admin->menu("web",$this->perm_user);
         $a['mblog'] = $this->models_admin->menu("blog",  $this->perm_user);
         $a['madmin'] = $this->models_admin->menu("admin",  $this->perm_user);
+        $a['mproducts'] = $this->models_admin->menu("products",$this->perm_user);
         $a['profile'] = $this->models_admin->profile_top($this->session->userdata("id_user"));
         $a['action'] = $this->perm_user."/categories/save";
-        $a['categories'] = $this->models_admin->categories(null,null);
+        $a['categories'] = $this->models_admin->categories("web",null);
         
         $this->load->view("admin/head",$a);
         $this->load->view("admin/menu");
@@ -78,16 +80,22 @@ class categories extends MX_Controller {
         $a['mweb'] = $this->models_admin->menu("web",$this->perm_user);
         $a['mblog'] = $this->models_admin->menu("blog",  $this->perm_user);
         $a['madmin'] = $this->models_admin->menu("admin",  $this->perm_user);
+        $a['mproducts'] = $this->models_admin->menu("products",$this->perm_user);
         $a['profile'] = $this->models_admin->profile_top($this->session->userdata("id_user"));
-        $a['action'] = $this->perm_user."/categories/saveupdate";
-        $a['categories'] = $this->models_admin->categories(null,null);
+        $a['action'] = $this->perm_user."/categories/saveupdate";  
         $whre['tb_id_categories'] = $uri;
         $content = $this->db->get_where("wq_categories",$whre);
         foreach($content->result() as $b){
             $a['id'] = $b->tb_id_categories;
             $a['name'] = $b->tb_name_categories;
-            
+            $a['parent'] = $b->tb_sub_categories;
         }
+        $a['categories'] = $this->models_admin->categories("web",$a['parent']);
+        
+        $this->load->view("admin/head",$a);
+        $this->load->view("admin/menu");
+        $this->load->view("admin/editcategories");
+        $this->load->view("admin/footer");
        }
        else{
            redirect("auth/auth");
@@ -99,10 +107,11 @@ class categories extends MX_Controller {
           $this->form_validation->set_rules('title','Title','trim|required');
            
            if ($this->form_validation->run()==FALSE){
-               $error = "";
+               show_error("Validation Error Bro",500);
            }
            $insert['tb_name_categories'] = $this->input->post("title");
            $insert['tb_sub_categories'] = $this->input->post("kategori");
+           $insert['tb_location_categories'] = "web";
            $insert['tb_status_categories'] = 1;
            
            $this->db->insert("wq_categories",$insert);
@@ -118,10 +127,11 @@ class categories extends MX_Controller {
            $this->form_validation->set_rules('title','Title','trim|required');
            
            if ($this->form_validation->run()==FALSE){
-               $error = "";
+               show_error("Validation Error Bro",500);
            }
            $insert['tb_name_categories'] = $this->input->post("title");
            $insert['tb_sub_categories'] = $this->input->post("kategori");
+           $insert['tb_location_categories'] = "web";
            $insert['tb_status_categories'] = 1;
            $where = $this->input->post("id");
            

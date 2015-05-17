@@ -69,7 +69,7 @@ class menu_admin extends MX_Controller {
        if ($this->perm_user=="administrator" && $this->logged_in=="ikehikehkimochi"){
           $uri="";
           if($this->uri->segment(4)===FALSE){
-              $error="";
+              show_error("Validation Error Bro",500);
           }
           else{
               $uri=$this->uri->segment(4);
@@ -129,10 +129,12 @@ class menu_admin extends MX_Controller {
            $this->form_validation->set_rules('title','Title','trim|required');
            
            if ($this->form_validation->run()==FALSE){
-               $error = "";
+              show_error("Validation Error Bro",500); 
            }
            $insert['tb_name_menu'] = $this->input->post("title");
-           $insert['tb_parent_menu'] = $this->input->post("kategori");
+           $insert['tb_link_menu'] = $this->input->post("module");
+           $insert['tb_location_menu'] = $this->input->post("location");
+           $insert['tb_permission_menu'] = $this->input->post("permission");
            $insert['tb_status_menu'] = 1;
            $where = $this->input->post("id");
            
