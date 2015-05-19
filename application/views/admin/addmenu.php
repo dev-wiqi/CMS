@@ -49,10 +49,17 @@
                                     <div class="control-group">
 	                                <label class="control-label">Content Menu: <span class="text-error">*</span></label>
 	                                <div class="controls">
-	                                    <select name="kategori" class="validate[required] styled" data-prompt-position="topLeft:-1,-5">
+	                                    <select name="content" class="validate[required] styled" data-prompt-position="topLeft:-1,-5">
                                                 <option value="0">--Select Parent--</option>
                                                 <?php echo $content; ?>
 	                                    </select>
+	                                </div>
+	                            </div>
+                                    
+                                    <div class="control-group">
+	                                <label class="control-label">Link: <span class="text-error">* For Advance</span></label>
+	                                <div class="controls">
+	                                    <input type="text" class="validate[required] span3" name="content2" id="req"/>
 	                                </div>
 	                            </div>
                                     

@@ -29,7 +29,7 @@ class cat_products extends MX_Controller {
         $a['mproducts'] = $this->models_admin->menu("products",$this->perm_user);
         $a['link'] = $this->perm_user."/cat_products/add";
         $a['profile'] = $this->models_admin->profile_top($this->session->userdata("id_user"));
-        $a['content'] = $this->models_admin->content('catprodcuts');
+        $a['content'] = $this->models_admin->content('catproducts');
         
        
         $this->load->view("admin/head",$a);

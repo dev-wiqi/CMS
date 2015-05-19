@@ -114,6 +114,13 @@ class menu extends MX_Controller {
            }
            $insert['tb_name_menu'] = $this->input->post("title");
            $insert['tb_parent_menu'] = $this->input->post("kategori");
+           if (!empty($this->input->post("content"))){
+           $insert['tb_link_menu'] = "main/page/".$this->input->post("content");   
+           }
+           else{
+           $insert['tb_link_menu'] = $this->input->post("content2");
+           }
+           $insert['tb_location_menu'] = "up";
            $insert['tb_status_menu'] = 1;
            
            $this->db->insert("wq_menu",$insert);

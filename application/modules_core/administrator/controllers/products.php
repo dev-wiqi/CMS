@@ -10,6 +10,9 @@ class products extends MX_Controller {
      * Founder & Programmer : Wisnu Groho Aji 
      * Website : http://wiqi.co
      */
+    
+    var $insert_id;
+    
     function __construct() {
         parent::__construct();
         $this->db_admin = $this->load->database("admin",TRUE);
@@ -83,15 +86,32 @@ class products extends MX_Controller {
             $config['max_width']  	= '3000';
             $config['max_height']  	= '3000';
 			 
-            $this->load->library('upload', $config);
+            $this->load->library('MY_upload');
             
-            if($this->upload->do_upload('img[]')){
-                $data = $this->upload->data();
-                
-                $source = "./media/products/".$data['file_name'];
+            $this->upload->initialize($config);
+            
+            if($this->upload->do_multi_upload("img") == FALSE){
+                $insert['tb_name_products'] = $this->input->post("title");
+                $insert['tb_date_products'] = $this->input->post("date");
+                $insert['tb_source_products'] = $this->input->post("content");
+                $insert['tb_author_products'] = $this->input->post("author");
+                $insert['tb_categories_products'] = $this->input->post("kategori");
+                $insert['tb_status_products'] = 1;
+                $this->db->insert("wq_products",$insert);
+                $insert_id = $this->db->insert_id();
+                $data = $this->upload->get_multi_upload_data();
+                $max = count($data);
+                for($i=0; $i<$max; $i++){
+                $source = "./media/products/".$data[$i]['file_name'];
                 $thumb = "./media/products/thumb";
                 
+                $insimg['tb_name_image'] = $data[$i]['file_name'];
+                $insimg['tb_location_image'] = "products";
+                $insimg['tb_link_image'] = $insert_id;
+                $this->db->insert("wq_image",$insimg);
+                
                 chmod($source, 0777);
+                chmod($thumb, 07777);
                 
                 $this->load->library('image_lib');
                 $img['image_library'] = 'GD2';
@@ -112,20 +132,11 @@ class products extends MX_Controller {
 		$this->image_lib->initialize($img);
 		$this->image_lib->resize();
 		$this->image_lib->clear() ;
-                
-                //$insert['tb_image_content'] = $data['file_name'];
-                $insert['tb_name_products'] = $this->input->post("title");
-                $insert['tb_date_products'] = $this->input->post("date");
-                $insert['tb_source_products'] = $this->input->post("content");
-                $insert['tb_author_products'] = $this->input->post("author");
-                $insert['tb_categories_products'] = $this->input->post("kategori");
-                $insert['tb_status_products'] = 1;
-                
-                $this->db->insert("wq_products",$insert);
+                }
                 redirect($this->perm_user."/products");
             }
             else{
-                echo $this->upload->display_errors();
+                print_r($this->upload->display_errors());
             }
        }
       }

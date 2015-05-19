@@ -305,7 +305,7 @@ class models_admin extends CI_model {
              $where['tb_location_categories'] = "products";
              $que = $this->db->get_where("wq_categories",$where);
                 foreach($que->result_array() as $a){
-                if($a['tb_status_categories'] === 1){$status="Publish";}elseif ($a['tb_status_categories'] === 2){$status = "Moderation";}else{$status = "Not Publish";}
+                if($a['tb_status_categories']==1){$status="Publish";}elseif ($a['tb_status_categories']==2){$status = "Moderation";}else{$status = "Not Publish";}
                 $value .= '<tr><td>'.$a['tb_id_categories'].'</td>
                                     <td>'.$a['tb_name_categories'].'</td>
                                     <td>'.$a['tb_sub_categories'].'</td>
