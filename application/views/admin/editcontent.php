@@ -32,7 +32,8 @@
 	                            <div class="control-group">
 	                                <label class="control-label">Title: <span class="text-error">*</span></label>
 	                                <div class="controls">
-	                                    <input type="text" class="validate[required] span10" name="title" id="req"/>
+	                                    <input type="text" class="validate[required] span10" name="title" value="<?php echo $name; ?>" id="req"/>
+                                            <input type="hidden" name="id" value="<?php echo $id; ?>"/>
 	                                </div>
 	                            </div>
 	                           
@@ -40,7 +41,7 @@
 	                                <label class="control-label">Categories: <span class="text-error">*</span></label>
 	                                <div class="controls">
 	                                    <select name="kategori" class="validate[required] styled" data-prompt-position="topLeft:-1,-5">
-                                                <option value="0" selected="selected">--Select Categories--</option>
+                                                <option value="0">--Select Categories--</option>
                                                 <?php echo $categories; ?>
 	                                    </select>
 	                                </div>
@@ -64,11 +65,18 @@
 	                            <div class="control-group">
 	                                <label class="control-label">Source: </label>
 	                                <div class="controls">
-	                                    <textarea name="content" class="ckeditor"></textarea>
+	                                    <textarea name="content" class="ckeditor"><?php echo $source; ?></textarea>
 	                                </div>
 	                            </div>
-                               
-                               <div class="control-group">
+                                    
+                                   <div class="control-group">
+                                    <label class="control-label">Styled file uploader:</label>
+                                    <div class="controls">
+                                        <?php echo $image; ?>
+                                    </div>
+                                    </div> 
+                                    
+                                    <div class="control-group">
                                     <label class="control-label">Styled file uploader:</label>
                                     <div class="controls">
                                         <input type="file" class="styled" name="img[]" />
@@ -76,7 +84,7 @@
                                         <input type="file" class="styled" name="img[]" />
                                         <input type="file" class="styled" name="img[]" />
                                     </div>
-                               </div>
+                                    </div>
 
 	                            <div class="form-actions align-right">
 	                                <button type="submit" class="btn btn-info">Submit</button>

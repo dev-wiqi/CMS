@@ -399,4 +399,15 @@ class models_admin extends CI_model {
           return $value;
       }
       
+      function image_db($location,$link){
+          $value = '';
+          $where['tb_location_image'] = $location;
+          $where['tb_link_image'] = $link;
+          $query = $this->db->get_where("wq_image",$where);
+          foreach($query->result() as $a){
+              $value .= '<img src="http://img.tramedifa.com/'.$location.'/thumb/'.$a->tb_name_image.'" width="30" height="30"/>';
+          }
+          return $value;
+      }
+      
     }

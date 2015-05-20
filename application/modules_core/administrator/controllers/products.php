@@ -148,10 +148,9 @@ class products extends MX_Controller {
      public function saveupdate(){
         if ($this->perm_user=="administrator" && $this->logged_in=="ikehikehkimochi"){
         $this->form_validation->set_rules('title','Title','trim|required');
-        $this->form_validation->set_rules('source','Source','trim|required');
         
         if ($this->form_validation->run() == FALSE){
-           $error = ""; 
+            show_error("Wrong Validation");
         }
         else{
           if(empty($_FILES['img']['name'])){
@@ -160,10 +159,13 @@ class products extends MX_Controller {
                 $insert['tb_source_products'] = $this->input->post("content");
                 $insert['tb_author_products'] = $this->input->post("author");
                 $insert['tb_categories_products'] = $this->input->post("kategori");
-                $insert['tb_status_products'] = 1;
+                $where = $this->input->post("id");
                 
-                $this->db->insert("wq_products",$insert);
-                redirect($this->session->userdata("permission")."/products");
+                $this->db->where("tb_id_products",$where);
+                $this->db->update("wq_products",$insert);
+                
+                $this->session->set_flashdata("result_action",'<div class="alert margin"><button type="button" class="close" data-dismiss="alert">X</button>Products Berhasil Di edit</div>');
+                redirect($this->perm_user."/products");
           }
           else{
             $config['upload_path']      = './media/products/';
@@ -174,15 +176,19 @@ class products extends MX_Controller {
             $config['max_width']  	= '3000';
             $config['max_height']  	= '3000';
 			 
-            $this->load->library('upload', $config);
+            $this->load->library('MY_upload');
+            $this->upload->initialize($config);
             
-            if($this->upload->do_upload("img")){
-                $data = $this->upload->data();
-                
-                $source = "./media/products/".$data['file_name'];
+            if($this->upload->do_multi_upload("img") == FALSE){
+                $data = $this->upload->get_multi_upload_data();
+               
+                $max = count($data);
+                for($i=0; $i<$max; $i++){
+                $source = "./media/products/".$data[$i]['file_name'];
                 $thumb = "./media/products/thumb";
                 
                 chmod($source, 0777);
+                chmod($thumb, 0777);
                 
                 $this->load->library('image_lib');
                 $img['image_library'] = 'GD2';
@@ -205,16 +211,24 @@ class products extends MX_Controller {
 		$this->image_lib->resize();
 		$this->image_lib->clear() ;
                 
-                //$insert['tb_image_content'] = $data['file_name'];
+                $insimg['tb_name_image'] = $data[$i]['file_name'];
+                $insimg['tb_location_image'] = "products";
+                $insimg['tb_link_image'] = $this->input->post("id");
+                $this->db->insert("wq_image",$insimg);
+                }
+                
                 $insert['tb_name_products'] = $this->input->post("title");
                 $insert['tb_date_products'] = $this->input->post("date");
                 $insert['tb_source_products'] = $this->input->post("content");
                 $insert['tb_author_products'] = $this->input->post("author");
                 $insert['tb_categories_products'] = $this->input->post("kategori");
-                $insert['tb_status_products'] = 1;
-                
-                $this->db->insert("wq_products",$insert);
-                redirect($this->perm_user."/content");
+                $where = $this->input->post("id");
+                $this->db->where("tb_id_products",$where);
+                $this->db->update("wq_products",$insert);
+                redirect($this->perm_user."/products");
+            }
+            else {
+                echo $this->upload->display_error();
             }
         }
        }
@@ -242,26 +256,23 @@ class products extends MX_Controller {
         $a['mproducts'] = $this->models_admin->menu("products",$this->perm_user);
         $a['profile'] = $this->models_admin->profile_top($this->session->userdata("id_user"));
         $a['action'] = $this->perm_user."/products/saveupdate";
-        $whre['tb_id_content'] = $uri;
-        $content = $this->db->select('wq_products.*,wq_image.tb_name_image,wq_image.tb_link_image');
-        $content .= $this->from('wq_products');
-        $content .= $this->join('wq_image','wq_image.tb_link_image=wq_products.tb_id_products');
-        $content .= $this->where('wq_products',$whre);
-        $content .= $this->get();
+        $where['tb_id_products'] = $uri;
+        $content = $this->db->get_where("wq_products",$where);
         foreach($content->result() as $b){
             $a['id'] = $b->tb_id_products;
             $a['name'] = $b->tb_name_products;
             $a['date'] = $b->tb_date_products;
             $a['author'] = $b->tb_author_products;
-            $a['source'] = $b->tb_source_content;
-            $a['image'] = $b->tb_name_image;
-            $a['categories'] = $b->tb_categories_products;
+            $a['source'] = $b->tb_source_products;
+            $categories = $b->tb_categories_products;
             $a['status'] = $b->tb_status_products;
         }
+            $a['categories'] = $this->models_admin->categories("products",$categories);
+            $a['image'] = $this->models_admin->image_db("products",$uri);
         
         $this->load->view("admin/head",$a);
         $this->load->view("admin/menu");
-        $this->load->view("admin/editblog");
+        $this->load->view("admin/editproducts");
         $this->load->view("admin/footer");
        }
        else{
@@ -279,8 +290,8 @@ class products extends MX_Controller {
                $uri=$this->uri->segment(4);
            }
            
-           $where['tb_id_content'] = $uri;
-           $this->db->delete("wq_content",$where);
+           $where['tb_id_products'] = $uri;
+           $this->db->delete("wq_products",$where);
            $this->session->set_flashdata("result_action",'<div class="alert margin"><button type="button" class="close" data-dismiss="alert">X</button>Content Berhasil Di Hapus</div>');
            redirect($this->perm_user."/content");
       }

@@ -33,6 +33,7 @@
 	                                <label class="control-label">Name: <span class="text-error">*</span></label>
 	                                <div class="controls">
                                             <input type="text" class="validate[required] span3" name="title" id="req" value="<?php echo $name; ?>"/>
+                                            <input type="hidden" name="id" value="<?php echo $id; ?>"/>
 	                                </div>
 	                            </div>
 	                           
@@ -40,6 +41,7 @@
 	                                <label class="control-label">Parent Menu: <span class="text-error">*</span></label>
 	                                <div class="controls">
 	                                    <select name="kategori" class="validate[required] styled" data-prompt-position="topLeft:-1,-5">
+                                                <option value="0">--Select Parent--</option>
                                                 <?php echo $categories; ?>
 	                                    </select>
 	                                </div>
@@ -48,8 +50,9 @@
                                     <div class="control-group">
 	                                <label class="control-label">Content Menu: <span class="text-error">*</span></label>
 	                                <div class="controls">
-	                                    <select name="kategori" class="validate[required] styled" data-prompt-position="topLeft:-1,-5">
-                                              <?php echo $content; ?>
+	                                    <select name="content" class="validate[required] styled" data-prompt-position="topLeft:-1,-5">
+                                                <option value="0">--Select Content--</option>
+                                                <?php echo $content; ?>
 	                                    </select>
 	                                </div>
 	                            </div>

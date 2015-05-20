@@ -52,7 +52,7 @@ class cat_products extends MX_Controller {
         $a['madmin'] = $this->models_admin->menu("admin",  $this->perm_user);
         $a['profile'] = $this->models_admin->profile_top($this->session->userdata("id_user"));
         $a['action'] = $this->perm_user."/cat_products/save";
-        $a['categories'] = $this->models_admin->categories(null,null);
+        $a['categories'] = $this->models_admin->categories("products",null);
         
         $this->load->view("admin/head",$a);
         $this->load->view("admin/menu");
@@ -79,15 +79,21 @@ class cat_products extends MX_Controller {
         $a['mweb'] = $this->models_admin->menu("web",$this->perm_user);
         $a['mblog'] = $this->models_admin->menu("blog",  $this->perm_user);
         $a['madmin'] = $this->models_admin->menu("admin",  $this->perm_user);
+        $a['mproducts'] = $this->models_admin->menu("products",  $this->perm_user);
         $a['profile'] = $this->models_admin->profile_top($this->session->userdata("id_user"));
         $a['action'] = $this->perm_user."/cat_products/saveupdate";
-        $a['categories'] = $this->models_admin->categories(null,null);
         $whre['tb_id_categories'] = $uri;
         $content = $this->db->get_where("wq_categories",$whre);
         foreach($content->result() as $b){
             $a['id'] = $b->tb_id_categories;
             $a['name'] = $b->tb_name_categories;
+            $categories = $b->tb_sub_categories;
         }
+        $a['categories'] = $this->models_admin->categories("products",$categories);
+        $this->load->view("admin/head",$a);
+        $this->load->view("admin/menu");
+        $this->load->view("admin/editcategories");
+        $this->load->view("admin/footer");
        }
        else{
            redirect("auth/auth");
@@ -107,7 +113,7 @@ class cat_products extends MX_Controller {
            $insert['tb_status_categories'] = 1;
            
            $this->db->insert("wq_categories",$insert);
-           redirect($this->perm_user."/categories");
+           redirect($this->perm_user."/cat_products");
        }
        else{
            redirect("auth/auth");
@@ -119,18 +125,18 @@ class cat_products extends MX_Controller {
            $this->form_validation->set_rules('title','Title','trim|required');
            
            if ($this->form_validation->run()==FALSE){
-               $error = "";
+               show_error("wrong validation");
            }
            $insert['tb_name_categories'] = $this->input->post("title");
            $insert['tb_sub_categories'] = $this->input->post("kategori");
            $insert['tb_location_categories'] = "products";
-           $insert['tb_status_categories'] = 1;
+           $insert['tb_status_categories'] = $this->input->post("status");
            $where = $this->input->post("id");
            
            $this->db->where("tb_id_categories",$where);
            $this->db->update("wq_categories",$insert);
-            $this->session->set_flashdata("result_action",'<div class="alert margin"><button type="button" class="close" data-dismiss="alert">X</button>Categories Berhasil Di edit</div>');
-           redirect($this->perm_user."/categories");
+           $this->session->set_flashdata("result_action",'<div class="alert margin"><button type="button" class="close" data-dismiss="alert">X</button>Categories Berhasil Di edit</div>');
+           redirect($this->perm_user."/cat_products");
        }
        else{
            redirect("auth/auth");
@@ -150,7 +156,7 @@ class cat_products extends MX_Controller {
            $where['tb_id_categories'] = $uri;
            $this->db->delete("wq_categories",$where);
            $this->session->set_flashdata("result_action",'<div class="alert margin"><button type="button" class="close" data-dismiss="alert">X</button>Categories Berhasil Di Hapus</div>');
-           redirect($this->perm_user."/categories");
+           redirect($this->perm_user."/cat_products");
       }
       else{
           redirect("auth/auth");

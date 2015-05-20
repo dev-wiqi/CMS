@@ -33,6 +33,7 @@
 	                                <label class="control-label">Title: <span class="text-error">*</span></label>
 	                                <div class="controls">
 	                                    <input type="text" class="validate[required] span10" value="<?php echo $name; ?>" name="title" id="req"/>
+                                            <input type="hidden" value="<?php echo $id; ?>" name="id"/>
 	                                </div>
 	                            </div>
 	                           
@@ -40,6 +41,7 @@
 	                                <label class="control-label">Categories: <span class="text-error">*</span></label>
 	                                <div class="controls">
 	                                    <select name="kategori" class="validate[required] styled" data-prompt-position="topLeft:-1,-5">
+                                                <option value="0">--Select Categories--</option>
 	                                       <?php echo $categories; ?>
 	                                    </select>
 	                                </div>
@@ -63,10 +65,17 @@
 	                            <div class="control-group">
 	                                <label class="control-label">Source: </label>
 	                                <div class="controls">
-	                                    <textarea name="content" class="ckeditor"></textarea>
+	                                    <textarea name="content" class="ckeditor"><?php echo $source; ?></textarea>
 	                                </div>
 	                            </div>
                                
+                                    <div class="control-group">
+                                    <label class="control-label">Image Products:</label>
+                                    <div class="controls">
+                                        <?php echo $image;?>
+                                    </div>
+                               </div>
+                                    
                                <div class="control-group">
                                     <label class="control-label">Styled file uploader:</label>
                                     <div class="controls">
