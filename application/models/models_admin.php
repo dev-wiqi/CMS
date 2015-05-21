@@ -160,12 +160,17 @@ class models_admin extends CI_model {
               return $value;
             }
          elseif($data=='slider') {
-              $que = $this->db->get_where("wq_slider");
+                $this->db->select('*');
+                $this->db->from('wq_slider');
+                $this->db->join('wq_image','wq_slider.tb_id_slider = wq_image.tb_link_image AND wq_image.tb_location_image = "slider"');
+                $where['tb_status_slider'] = 1;
+                $this->db->where($where);
+                $que = $this->db->get();
                 foreach($que->result_array() as $a){
                 if($a['tb_status_slider']==1){$status="Publish";}elseif ($a['tb_status_slider'] == 2){$status = "Moderation";}else{$status = "Not Publish";}
                 $value .= '<tr><td>'.$a['tb_id_slider'].'</td>
                                     <td>'.$a['tb_name_slider'].'</td>
-                                    <td>'.$a['tb_image_slider'].'</td>
+                                    <td>'.$a['tb_name_image'].'</td>
                                     <td>'.$status.'</td>
                                     <td>
                                         <ul class="navbar-icons">

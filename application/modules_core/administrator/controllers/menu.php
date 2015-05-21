@@ -110,16 +110,15 @@ class menu extends MX_Controller {
            $this->form_validation->set_rules('title','Title','trim|required');
            
            if ($this->form_validation->run()==FALSE){
-               $error = "";
+               show_error("Validation Error",500);
            }
            $insert['tb_name_menu'] = $this->input->post("title");
            $insert['tb_parent_menu'] = $this->input->post("kategori");
+           //Not Work in php 5.3.10 OS : Ubuntu
            if (!empty($this->input->post("content"))){
            $insert['tb_link_menu'] = "main/page/".$this->input->post("content");   
            }
-           else{
            $insert['tb_link_menu'] = $this->input->post("content2");
-           }
            //$insert['tb_location_menu'] = "up";
            $insert['tb_status_menu'] = 1;
            

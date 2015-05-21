@@ -52,7 +52,7 @@ $multiple_databases = TRUE;
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
-$db['default']['password'] = '';
+$db['default']['password'] = 'b6152kuy';
 $db['default']['database'] = 'wq_sammarie_web';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
@@ -72,7 +72,7 @@ $active_record = TRUE;
 
 $db['admin']['hostname'] = 'localhost';
 $db['admin']['username'] = 'root';
-$db['admin']['password'] = '';
+$db['admin']['password'] = 'b6152kuy';
 $db['admin']['database'] = 'wq_sammarie_admin';
 $db['admin']['dbdriver'] = 'mysql';
 $db['admin']['dbprefix'] = '';

@@ -44,7 +44,7 @@ class slider extends MX_Controller {
         $a['mblog'] = $this->models_admin->menu("blog",  $this->perm_user);
         $a['madmin'] = $this->models_admin->menu("admin",  $this->perm_user);
         $a['mproducts'] = $this->models_admin->menu("products",$this->perm_user);
-        $a['profile'] = $this->models_admin->profile_top(1);
+        $a['profile'] = $this->models_admin->profile_top($this->session->userdata("id_user"));
         $a['action'] = $this->perm_user."/slider/save";
         
         $this->load->view("admin/head",$a);
@@ -55,13 +55,12 @@ class slider extends MX_Controller {
     
     public function save(){
         if ($this->perm_user=="administrator" && $this->logged_in=="ikehikehkimochi"){
-        //$this->form_validation->set_rules('title','Title','trim|required');
-        //$this->form_validation->set_rules('img','Image','trim|required');
+        $this->form_validation->set_rules('title','Title','trim|required');
         
-        //if ($this->form_validation->run() == FALSE){
-           //$error = "ini error"; 
-        //}
-        //else{
+        if ($this->form_validation->run() == FALSE){
+            show_error("Validation Error",500);
+        }
+        else{
             $config['upload_path'] = './media/slider/';
             $config['allowed_types']= 'gif|jpg|png|jpeg';
             $config['encrypt_name']	= TRUE;
@@ -70,7 +69,6 @@ class slider extends MX_Controller {
             $config['max_width']  	= '3000';
             $config['max_height']  	= '3000';
 			 
-            $this->load->library('upload');
             $this->upload->initialize($config);
             
             if($this->upload->do_upload("img")){
@@ -80,6 +78,7 @@ class slider extends MX_Controller {
                 $thumb = "./media/slider/thumb";
                 
                 chmod($source, 0777);
+                chmod($thumb, 0777);
                 
                 $this->load->library('image_lib');
                 $img['image_library'] = 'GD2';
@@ -116,9 +115,29 @@ class slider extends MX_Controller {
             else{
                 echo $this->upload->display_errors();
             }
-       //}
+       }
       }
       else {
+          redirect("auth/auth");
+      }
+    }
+    
+    public function delete(){
+      if ($this->perm_user=="administrator" && $this->logged_in=="ikehikehkimochi"){
+           $uri="";
+           if ($this->uri->segment(4)===FALSE){
+               $uri = "";
+           }
+           else{
+               $uri=$this->uri->segment(4);
+           }
+           
+           $where['tb_id_slider'] = $uri;
+           $this->db->delete("wq_slider",$where);
+           $this->session->set_flashdata("result_action",'<div class="alert margin"><button type="button" class="close" data-dismiss="alert">X</button>Slider Berhasil Di Hapus</div>');
+           redirect($this->perm_user."/slider");
+      }
+      else{
           redirect("auth/auth");
       }
     }
